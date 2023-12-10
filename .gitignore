@@ -1,0 +1,12 @@
+# IDE
+.idea
+.vscode
+
+# Node
+node_modules
+
+
+# Generated files
+backstop_data
+dist
+.cache
