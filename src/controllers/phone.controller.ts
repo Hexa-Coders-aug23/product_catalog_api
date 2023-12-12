@@ -3,7 +3,7 @@ import * as phoneService from '../services/phone.service';
 import { notFoundResponse } from '../helpers/notFoundResponse';
 
 export const get = async(req: Request, res: Response) => {
-  res.send(await phoneService.getAll());
+  res.send(await phoneService.getPhones(req.query));
 };
 
 export const getOne = async(req: Request, res: Response) => {
