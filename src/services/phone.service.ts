@@ -12,7 +12,7 @@ const phonesPath = path.join(__dirname, '../../store', 'phones.json');
 
 export const getPhones = async(queryParams: QueryParams) => {
   const sortBy: SortBy = queryParams.sortBy || SortBy.Newest;
-  const itemsOnPage: number = +queryParams.perPage || 16;
+  const itemsOnPage: number | string = queryParams.perPage || 16;
   const page: number = +queryParams.page || 1;
 
   const data = await fs.readFile(phonesPath, 'utf-8');
@@ -37,8 +37,12 @@ export const getPhones = async(queryParams: QueryParams) => {
     }
   });
 
+  if (itemsOnPage === 'all') {
+    return phonesWithImages;
+  }
+
   return phonesWithImages.slice(
-    itemsOnPage * page - itemsOnPage,
+    +itemsOnPage * page - +itemsOnPage,
     +itemsOnPage * page,
   );
 };
