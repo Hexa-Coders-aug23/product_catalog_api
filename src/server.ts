@@ -2,10 +2,12 @@
 import express from 'express';
 import cors from 'cors';
 import ENV from 'dotenv';
+ENV.config();
 import path from 'path';
 import { phoneRouter } from './routes/phone.route';
+import { connect } from './utils/initDb';
 
-ENV.config();
+connect();
 
 const app = express();
 
@@ -21,4 +23,5 @@ app.use(express.static(path.resolve(process.env.STATIC_PATH as string)));
 app.use('/phones', express.json(), phoneRouter);
 
 app.listen(3005, () =>
-  console.log('Server is running on https://localhost:3005'));
+  console.log('Server is running on https://localhost:3005'),
+);
