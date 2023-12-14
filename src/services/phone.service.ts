@@ -32,7 +32,7 @@ export const getRecommendations = async (phoneId: string) => {
 
   const { id } = phone;
 
-  const recommendedPhones = await Phone.findAll({
+  return Phone.findAll({
     where: {
       phoneId: {
         [Op.not]: id,
@@ -41,6 +41,16 @@ export const getRecommendations = async (phoneId: string) => {
     order: literal('RANDOM()'),
     limit: 12,
   });
+};
 
-  return recommendedPhones;
+export const getDiscounts = () => {
+  return Phone.findAll({
+    where: {
+      price: {
+        [Op.ne]: literal('"fullPrice"'),
+      },
+    },
+    order: [[literal('ABS("fullPrice" - "price")'), 'desc']],
+    limit: 12,
+  });
 };

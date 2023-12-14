@@ -38,3 +38,12 @@ export const getRecommendations = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getDiscountedPhones = async (req: Request, res: Response) => {
+  try {
+    res.send(await phoneService.getDiscounts());
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
