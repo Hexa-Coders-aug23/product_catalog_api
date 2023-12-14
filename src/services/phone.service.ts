@@ -1,9 +1,9 @@
 import ENV from 'dotenv';
+ENV.config();
 import { QueryParams } from '../types/QueryParams';
 import { PhoneDetails, Phone } from '../models/';
 import { validateAndNormalize } from '../validation/validateAndNormalizeParams';
-
-ENV.config();
+import { literal, Op } from 'sequelize';
 
 export const getPhones = async (queryParams: QueryParams) => {
   const { offset, limit, sortByColumn, order } =
@@ -27,8 +27,20 @@ export const count = () => {
   return Phone.count();
 };
 
-export const getRecommendations = async (id: string) => {
-  const phone = await getById(id);
+export const getRecommendations = async (phoneId: string) => {
+  const phone = (await getById(phoneId)) as PhoneDetails;
 
-  return phone;
+  const { id } = phone;
+
+  const recommendedPhones = await Phone.findAll({
+    where: {
+      phoneId: {
+        [Op.not]: id,
+      },
+    },
+    order: literal('RANDOM()'),
+    limit: 12,
+  });
+
+  return recommendedPhones;
 };

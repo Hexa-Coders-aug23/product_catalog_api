@@ -8,26 +8,33 @@ export const get = async (req: Request, res: Response) => {
 
     res.send(phones);
   } catch (err) {
-    res.send(err);
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };
 
 export const getOne = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  const phone = await phoneService.getById(id);
+    const phone = await phoneService.getById(id);
 
-  if (!phone) {
-    return notFoundResponse(res);
+    if (!phone) {
+      return notFoundResponse(res);
+    }
+
+    res.send(phone);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
   }
-
-  res.send(phone);
 };
 
 export const getRecommendations = async (req: Request, res: Response) => {
   try {
     res.send(await phoneService.getRecommendations(req.params.id));
   } catch (err) {
-    res.send(err);
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };
