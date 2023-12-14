@@ -12,12 +12,8 @@ export const getOne = async (req: Request, res: Response) => {
   try {
     const phone = await phoneService.getById(id);
 
-    res.send(phone);
+    res.send({ phone });
   } catch (_) {
     return notFoundResponse(res);
   }
-};
-
-export const getAll = async (req: Request, res: Response) => {
-  res.send(await phoneService.getAllPhones());
 };
