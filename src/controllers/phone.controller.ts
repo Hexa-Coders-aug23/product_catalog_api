@@ -56,3 +56,14 @@ export const getNewPhones = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getLength = async (req: Request, res: Response) => {
+  try {
+    const count = await phoneService.count();
+
+    res.send({ phonesCount: count });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
