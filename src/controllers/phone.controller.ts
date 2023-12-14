@@ -47,3 +47,12 @@ export const getDiscountedPhones = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getNewPhones = async (req: Request, res: Response) => {
+  try {
+    res.send(await phoneService.getNew());
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};

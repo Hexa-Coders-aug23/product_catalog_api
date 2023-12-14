@@ -54,3 +54,10 @@ export const getDiscounts = () => {
     limit: 12,
   });
 };
+
+export const getNew = () => {
+  return Phone.findAll({
+    order: [['fullPrice', 'desc']],
+    limit: 12,
+  });
+};
