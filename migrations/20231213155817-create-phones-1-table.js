@@ -6,7 +6,7 @@ module.exports = {
     await queryInterface.createTable('phones', {
       id: {
         type: Sequelize.INTEGER,
-        autoIncrement:true,
+        autoIncrement: true,
         primaryKey: true,
         allowNull: false,
       },
@@ -53,7 +53,7 @@ module.exports = {
     });
   },
 
-  async down (queryInterface) {
+  async down(queryInterface) {
     await queryInterface.dropTable('phone_details');
-  }
+  },
 };

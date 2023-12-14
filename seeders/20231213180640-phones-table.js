@@ -6,10 +6,10 @@ const path = require('path');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface) {
+  async up(queryInterface) {
     const serverBaseUrl = process.env.SERVER_URL;
 
-    const normalizeImage = imagePath => {
+    const normalizeImage = (imagePath) => {
       return `${serverBaseUrl}/${imagePath}`;
     };
     const filePath = path.join(__dirname, '../store/phones.json');
@@ -17,7 +17,7 @@ module.exports = {
 
     const phones = JSON.parse(data);
 
-    const phonesWithImages = phones.map(phone => ({
+    const phonesWithImages = phones.map((phone) => ({
       ...phone,
       id: +phone.id,
       image: normalizeImage(phone.image),
@@ -26,7 +26,9 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.bulkInsert('phones', phonesWithImages, { transaction });
+      await queryInterface.bulkInsert('phones', phonesWithImages, {
+        transaction,
+      });
 
       await transaction.commit();
     } catch (err) {
@@ -36,7 +38,7 @@ module.exports = {
     }
   },
 
-  async down (queryInterface) {
+  async down(queryInterface) {
     await queryInterface.bulkDelete('phones', null, {});
-  }
+  },
 };

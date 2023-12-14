@@ -26,3 +26,9 @@ export const getById = async (id: string) => {
 export const count = () => {
   return Phone.count();
 };
+
+export const getRecommendations = async (id: string) => {
+  const phone = await getById(id);
+
+  return phone;
+};

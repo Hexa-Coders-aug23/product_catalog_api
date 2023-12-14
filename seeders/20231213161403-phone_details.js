@@ -6,21 +6,21 @@ const path = require('path');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface) {
+  async up(queryInterface) {
     const jsonFolderPath = path.join(__dirname, '../store/phones');
 
-    const combineJsonFiles = async folderPath => {
+    const combineJsonFiles = async (folderPath) => {
       try {
         const files = await fs.readdir(folderPath);
 
         const combinedData = await Promise.all(
           files
-            .filter(file => file.endsWith('.json'))
-            .map(async file => {
+            .filter((file) => file.endsWith('.json'))
+            .map(async (file) => {
               const filePath = path.join(folderPath, file);
               const fileData = await fs.readFile(filePath, 'utf-8');
               return JSON.parse(fileData);
-            })
+            }),
         );
 
         return combinedData;
@@ -32,15 +32,17 @@ module.exports = {
 
     const serverBaseUrl = process.env.SERVER_URL;
 
-    const normalizeImage = imagePath => {
+    const normalizeImage = (imagePath) => {
       return `${serverBaseUrl}/${imagePath}`;
     };
 
     const phonesData = await combineJsonFiles(jsonFolderPath);
 
-    const phonesWithImages = phonesData.map(phone => ({
+    const phonesWithImages = phonesData.map((phone) => ({
       ...phone,
-      images: JSON.stringify(phone.images.map(imagePath => normalizeImage(imagePath))),
+      images: JSON.stringify(
+        phone.images.map((imagePath) => normalizeImage(imagePath)),
+      ),
       description: JSON.stringify(phone.description),
       capacityAvailable: JSON.stringify(phone.capacityAvailable),
       colorsAvailable: JSON.stringify(phone.colorsAvailable),
@@ -50,7 +52,9 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction();
 
     try {
-      await queryInterface.bulkInsert('phone_details', phonesWithImages, { transaction });
+      await queryInterface.bulkInsert('phone_details', phonesWithImages, {
+        transaction,
+      });
 
       await transaction.commit();
     } catch (err) {
@@ -60,7 +64,7 @@ module.exports = {
     }
   },
 
-  async down (queryInterface) {
+  async down(queryInterface) {
     await queryInterface.bulkDelete('phone_details', null, {});
-  }
+  },
 };
