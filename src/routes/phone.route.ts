@@ -14,3 +14,5 @@ phoneRouter.get('/new', phoneController.getNewPhones);
 phoneRouter.get('/:id', phoneController.getOne);
 
 phoneRouter.get('/:id/recommended', phoneController.getRecommendations);
+
+phoneRouter.get('/many/:ids', phoneController.getMany);

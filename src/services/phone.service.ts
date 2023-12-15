@@ -19,6 +19,18 @@ export const getPhones = async (queryParams: QueryParams) => {
   });
 };
 
+export const getByIds = (ids: string) => {
+  const normalizedIds = ids.split(',').map(Number);
+
+  return Phone.findAll({
+    where: {
+      id: {
+        [Op.in]: normalizedIds,
+      },
+    },
+  });
+};
+
 export const getById = async (id: string) => {
   return PhoneDetails.findByPk(id);
 };

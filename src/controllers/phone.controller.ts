@@ -13,6 +13,19 @@ export const get = async (req: Request, res: Response) => {
   }
 };
 
+export const getMany = async (req: Request, res: Response) => {
+  console.log('get many');
+  const { ids } = req.params;
+  try {
+    const phones = await phoneService.getByIds(ids);
+
+    res.send(phones);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 export const getOne = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
