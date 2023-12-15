@@ -28,7 +28,7 @@ export const validateAndNormalize = async ({
 
   const maxPage = phonesCount / +limit - 1;
 
-  if (offset > maxPage) {
+  if (offset > Math.ceil(maxPage)) {
     offset = 0;
   }
 
