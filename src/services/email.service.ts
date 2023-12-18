@@ -20,7 +20,7 @@ async function send({ email, subject, html }: Email) {
 }
 
 const sendActivationEmail = (email: string, token: string) => {
-  const href = `http://localhost:3005/activation/${token}`;
+  const href = `${process.env.SERVER_URL}/activation/${token}`;
 
   const html = `
   <h1>Activate Account</h1>
