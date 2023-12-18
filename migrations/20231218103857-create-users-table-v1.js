@@ -19,6 +19,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      activationToken: {
+        type: Sequelize.STRING,
+      },
     });
   },
 

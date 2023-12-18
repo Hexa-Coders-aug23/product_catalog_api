@@ -7,6 +7,7 @@ import path from 'path';
 import { phoneRouter, tabletRouter, accessoryRouter } from './routes';
 import { connect } from './utils/initDb';
 import { authRouter } from './routes/auth.route';
+import { userRouter } from './routes/user.route';
 
 connect();
 
@@ -22,6 +23,8 @@ app.use(
 app.use(express.static(path.resolve(process.env.STATIC_PATH as string)));
 
 app.use('/', express.json(), authRouter);
+
+app.use('/users', express.json(), userRouter);
 
 app.use('/phones', express.json(), phoneRouter);
 

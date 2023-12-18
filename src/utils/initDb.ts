@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Phone, PhoneDetails } from '../models';
 import ENV from 'dotenv';
-import { User } from '../models/user';
+import { User } from '../models';
 
 ENV.config();
 

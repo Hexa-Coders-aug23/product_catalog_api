@@ -27,4 +27,8 @@ export class User extends Model {
   @AllowNull(false)
   @Column
     password: string;
+
+  @AllowNull(true)
+  @Column
+    activationToken: string;
 }
