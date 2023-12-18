@@ -6,6 +6,7 @@ ENV.config();
 import path from 'path';
 import { phoneRouter, tabletRouter, accessoryRouter } from './routes';
 import { connect } from './utils/initDb';
+import { authRouter } from './routes/auth.route';
 
 connect();
 
@@ -19,6 +20,8 @@ app.use(
 );
 
 app.use(express.static(path.resolve(process.env.STATIC_PATH as string)));
+
+app.use('/', express.json(), authRouter);
 
 app.use('/phones', express.json(), phoneRouter);
 
