@@ -6,7 +6,10 @@ import {
   AllowNull,
   AutoIncrement,
   Unique,
+  HasOne,
 } from 'sequelize-typescript';
+
+import { Token } from './Token';
 
 @Table({
   tableName: 'users',
@@ -18,6 +21,9 @@ export class User extends Model {
   @AllowNull(false)
   @Column
     id: number;
+
+  @HasOne(() => Token)
+    token: Token;
 
   @AllowNull(false)
   @Column

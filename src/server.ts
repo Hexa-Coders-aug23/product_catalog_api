@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import ENV from 'dotenv';
 ENV.config();
@@ -19,6 +20,8 @@ app.use(
     credentials: true,
   }),
 );
+
+app.use(cookieParser());
 
 app.use(express.static(path.resolve(process.env.STATIC_PATH as string)));
 
