@@ -20,6 +20,10 @@ export class User extends Model {
     id: number;
 
   @AllowNull(false)
+  @Column
+    name: string;
+
+  @AllowNull(false)
   @Unique
   @Column
     email: string;
