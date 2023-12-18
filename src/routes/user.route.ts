@@ -1,6 +1,6 @@
 import express from 'express';
-import { authController } from '../controllers/auth.controller';
+import { userController } from '../controllers/user.controller';
 
 export const userRouter = express.Router();
 
-userRouter.get('/registration', authController.register);
+userRouter.get('/', userController.get);
