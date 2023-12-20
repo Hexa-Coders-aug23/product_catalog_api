@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import * as phoneService from '../services/phone.service';
 import { notFoundResponse } from '../helpers/notFoundResponse';
+import { Phone } from '../models';
+import { Op } from 'sequelize';
 
 export const get = async (req: Request, res: Response) => {
   try {
@@ -36,7 +38,20 @@ export const getOne = async (req: Request, res: Response) => {
       return notFoundResponse(res);
     }
 
-    res.send(phone);
+    const phoneCard = await Phone.findOne({
+      where: {
+        phoneId: {
+          [Op.eq]: id,
+        },
+      },
+    });
+
+    const resPhone = {
+      ...phone.dataValues,
+      phoneId: phoneCard?.id,
+    };
+
+    res.send(resPhone);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Internal server error' });
