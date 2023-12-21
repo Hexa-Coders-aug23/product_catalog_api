@@ -7,7 +7,7 @@ const refreshKey = process.env.JWT_REFRESH_KEY as string;
 
 const sign = (user: Pick<IUser, 'id' | 'email'>) => {
   const token = jwt.sign(user, secretKey, {
-    expiresIn: '20m',
+    expiresIn: '3m',
   });
 
   return token;
@@ -29,7 +29,7 @@ const signRefresh = (user: Pick<IUser, 'id' | 'email'>) => {
 
 const verifyRefresh = (token: string) => {
   try {
-    return jwt.verify(token, secretKey);
+    return jwt.verify(token, refreshKey);
   } catch (e) {
     return null;
   }

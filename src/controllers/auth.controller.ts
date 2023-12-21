@@ -114,6 +114,12 @@ const refresh = async (req: Request, res: Response) => {
   try {
     const { refreshToken } = req.cookies;
 
+    if (refreshToken === undefined) {
+      res.status(401).send('Need to login');
+
+      return;
+    }
+
     const userData = jwtService.verifyRefresh(refreshToken);
     const token = tokenService.getByToken(refreshToken);
 
@@ -122,6 +128,7 @@ const refresh = async (req: Request, res: Response) => {
 
       return;
     }
+    console.log('Fall here');
 
     const user = await userService.findByEmail(userData.email);
 
